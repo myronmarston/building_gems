@@ -3,6 +3,9 @@
 
 ## Myron Marston ##
 
+### WhitePages.com ###
+### August 26th, 2010 ###
+
 !SLIDE small
 # We've got this code in rcommon... #
 
@@ -45,9 +48,9 @@
 
 !SLIDE
 
-## What does this give you? ##
+# What does this give you? #
 
-!SLIDE small
+!SLIDE smaller
 
 # Gemfile #
 
@@ -59,7 +62,7 @@
 
 !SLIDE bullets incremental
 
-# Having a Gemfile helps in a few ways: #
+# Having a Gemfile helps in a couple ways: #
 
 * Lets contributors easily install all development dependencies with `bundle install`
 * In development, locks dependencies to a known working set.
@@ -74,7 +77,7 @@
 
 !SLIDE commandline incremental smaller
 
-## Bundler gives you some default rake tasks ##
+# Bundler gives you some default rake tasks #
 
     $ rake -T
     (in /home/mmarston/wp_validators)
@@ -98,7 +101,7 @@
 
 ### Ignores gem and bundle artifacts ###
 
-!SLIDE
+!SLIDE bullets incremental
 
 # lib/wp_validators/version.rb #
 
@@ -107,7 +110,8 @@
       VERSION = "0.0.1"
     end
 
-### Gives you a single canonical place to specify version. ###
+* Gives you a single canonical place to specify version.
+* Allows consuming code to have conditionals based on the version.
 
 !SLIDE smaller
 
@@ -148,10 +152,10 @@
 * `s.files` and `s.executables` use git to figure out the files.
 * You should update `authors`, `email`, `summary` and `description`.
 
-!SLIDE
+!SLIDE bullets incremental
 
 # Step 3: Setup your test environment. #
-### (I like RSpec, but you may opt for Test::Unit, Shoulda, or something else) ###
+* (I like RSpec, but you may opt for Test::Unit, Shoulda, or something else)
 
 !SLIDE small
 
@@ -315,13 +319,6 @@
 
 !SLIDE commandline incremental small
 # Step 5: Publish your gem #
-    $ git tag v0.0.1
-
-    $ git push origin master --tags
-    Total 0 (delta 0), reused 0 (delta 0)
-    To git@github.com:myronmarston/wp_validators.git
-       df5f048..0e7f0be  v0.0.1 -> v0.0.1 
-
     $ [sudo] gem install gemcutter
     ...
     Successfully installed gemcutter-0.6.1
@@ -340,7 +337,14 @@
     Pushing gem to RubyGems.org...
     Successfully registered gem: wp_validators (0.0.1)
 
-!SLIDE small
+    $ git tag v0.0.1
+
+    $ git push origin master --tags
+    Total 0 (delta 0), reused 0 (delta 0)
+    To git@github.com:myronmarston/wp_validators.git
+       df5f048..0e7f0be  v0.0.1 -> v0.0.1 
+
+!SLIDE small commandline incremental
 # Let's use our new gem! #
 
     $ [sudo] gem install wp_validators
@@ -350,17 +354,64 @@
     Installing RDoc documentation for wp_validators-0.0.1...
 
     $ irb
-    > require 'rubygems'
+    $ require 'rubygems'
      => true 
-    > require 'wp_validators'
+    $ require 'wp_validators'
      => true 
-    > WpValidators.is_valid_url?('http://whitepages.com/')
+    $ WpValidators.is_valid_url?('http://whitepages.com/')
      => true 
-    > WpValidators.is_valid_url?('not a url')
+    $ WpValidators.is_valid_url?('not a url')
      => false 
+
+!SLIDE bullets incremental
+# What if we don't want to open source this code? #
+
+* Generally, I think we should open source generic code that doesn't contain proprietary data or algorithms.
+* Other developers will help us improve our code!
+* But if we want to package some proprietary code as a gem, it's easy...
+
+!SLIDE center
+## We can host our own gem server ##
+
+![Geminabox on Github](geminabox_on_github.jpg)
+
+!SLIDE center
+
+## It took me < 10 minutes to setup. ##
+![Gem in a Box](gem_in_a_box.jpg)
+
+!SLIDE bullets incremental
+## There are lots of libraries to help you build gems ##
+### (but I prefer using bundler and doing the rest by hand) ###
+
+* jeweler
+* newgem
+* hoe
+* echoe
+* [List from Ruby Toolbox](http://www.ruby-toolbox.com/categories/gem_creation.html)
+
+!SLIDE bullets incremental
+## Gem Tips ##
+### (not enough time to cover these in detail) ###
+
+* Maintain a good README and CHANGELOG
+* Put all your library code in lib/<gem_name>.rb or lib/<gem_name>/...
+* Otherwise, there could be name collisions since your lib dir gets added to the load path by rubygems.
+
+!SLIDE bullets incremental
+## Gem Tips ##
+### (not enough time to cover these in detail) ###
+
+* Use semantic versioning
+* Bump the major version when you break the public API
+* Bump the minor version when you add a new feature that shouldn't break clients
+* Bump the patch version when you fix a bug or add a simple perf improvement
 
 !SLIDE bullets
 # Resources #
 
 * [Gemspec Documentation](http://rubygems.rubyforge.org/rubygems-update/Gem/Specification.html)
-* [Bundler Documenation](http://gembundler.com/)
+* [Bundler Documentation](http://gembundler.com/)
+* [Semantic Versioning](http://semver.org/)
+* [Gem In a Box](http://github.com/cwninja/geminabox/)
+* [WP Validators](http://github.com/myronmarston/wp_validators)
